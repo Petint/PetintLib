@@ -1,13 +1,13 @@
+__version__ = '2.0.1'
+__all__ = ["constants", "du_to_int", "getmcpi", "filetofloat", "FileImportStrList",
+           "randomfoatlist"]
+"""Module content"""
+
 constants = {
     "tnt": 46,
     "weed": 420,
     "gridparts": ('─', '│', '┌', '┐', '└', '┘', '├', '┤', '┬', '┴', '┼')
 }
-"""kostansok listája"""
-
-__all__ = ["constants", "du_to_int", "getmcpi", "filetofloat", "FileImportStrList",
-           "randomfoatlist"]
-"""Module content"""
 
 
 def du_to_int(tries: int, message: str) -> int:

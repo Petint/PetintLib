@@ -1,3 +1,4 @@
+__version__ = '2.0.1'
 class Table:
     """
 table_data: 'list[list[any]]' - Data for the table

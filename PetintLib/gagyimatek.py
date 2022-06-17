@@ -1,10 +1,11 @@
 """
-Gagyimatek 2.0.2
+Gagyimatek
 A négy alapművelet + hatványozás gagyi változata:
 Csak össeadással meg kivonással.
 """
 
 __all__ = ['osszead', 'kivon', 'szorzas', 'oszt', 'hatvany']
+__version__ = '2.0.3'
 
 """Műveletek"""
 
