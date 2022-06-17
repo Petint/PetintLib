@@ -1,5 +1,5 @@
 import json
-from autotable import Table
+from PetintLib.autotable import Table
 
 jsonfile = open("427520.json", 'rt')
 jsondata = json.load(jsonfile)

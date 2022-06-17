@@ -1,6 +1,4 @@
-import autotable
-import gagyimatek
-import petint
+from PetintLib import autotable, petint, gagyimatek
 
 if __name__ == '__main__':
     input("Testing autotable.py...")

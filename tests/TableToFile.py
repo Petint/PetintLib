@@ -1,4 +1,4 @@
-from autotable import Table
+from PetintLib.autotable import Table
 
 size = 5
 test_data = [[x * size + y for y in range(size)] for x in range(size)]
