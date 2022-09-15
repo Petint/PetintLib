@@ -1,2 +1,2 @@
 # PetintLib
-PetintLib now has it's own repo
+PetintLib now has its own repo

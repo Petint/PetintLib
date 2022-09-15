@@ -1,4 +1,6 @@
-__version__ = '2.0.1'
+__version__ = '2.0.2'
+
+
 class Table:
     """
 table_data: 'list[list[any]]' - Data for the table
@@ -12,7 +14,8 @@ align: str - Horizontal: 'w' for west, 'e' - for east, 'c' - for center (center 
 
     """
 
-    def __init__(self, table_data: 'list[list]', width: int = 0, height: int = 1, align: str = 'WB'):
+    # valid kwargs: width: int = 0, height: int = 1, align: str = 'WB'
+    def __init__(self, table_data: 'list[list]', **kwargs):
         """
 table_data: 'list[list[any]]' - Data for the table
 
@@ -21,12 +24,11 @@ width: int - Width of a cell, auto by default
 height: int - Height of cell, 1 by default.
 
 align: str - Horizontal: 'w' for west, 'e' - for east, 'c' - for center (center is kinda iffy.)
-                 Vertical: 'T' for fop, 'B' for bottom, 'C' for center, ('WB' by default)
+                 Vertical: 'T' for fop, 'B' for bottom, 'C' for center, ('WT' by default)
 
         """
-        if width == 0:
-            width = auto(table_data)
-        self._t1 = TableInternal(table_data, width, height, align)
+        w, h, a = kwargs.get('width', auto(table_data)), kwargs.get('height', 1), kwargs.get('align', 'wt')
+        self._t1 = TableInternal(table_data, w, h, a)
 
     def make(self) -> str:
         """
