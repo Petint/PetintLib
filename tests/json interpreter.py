@@ -8,7 +8,7 @@ def main():
     jsonfile.close()
     print(jsondata)
 
-    json_table = Table(jsondata, width=20)
+    json_table = Table(jsondata, align='ec', height=3, width=25)
     print(json_table.make())
 
 
