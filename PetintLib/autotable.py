@@ -53,7 +53,7 @@ class TableInternal:
         self.cell_height = height
         self.align = align.lower()
 
-    def getdro(self, index: int) -> str:
+    def getdatarow(self, index: int) -> str:
         r = ''
         er = len(self.tabledata[0]) * ("│" + self.item_length * " ") + "│\n"
         for ii in range(len(self.tabledata[index])):
@@ -87,7 +87,10 @@ class TableInternal:
             raise ValueError(("Invalid vertical alignment", self.align[1], "Must be 'T', 'B' or 'C'"))
         return fr
 
-    def getndr(self, sep) -> str:
+    def getdatarow_new(self, rd):
+        pass
+
+    def getnondatarow(self, sep) -> str:
         r = sep[0]  # head: '┌┬┐' | foot: '└┴┘' | sep: '├┼┤'
         r += self.item_length * "─"
         for __i in range(len(self.tabledata[0]) - 1):
@@ -97,20 +100,20 @@ class TableInternal:
         return r
 
     def make(self) -> str:
-        str_table = self.getndr('┌┬┐')  # Head
-        seprow = self.getndr('├┼┤')  # Separator row
+        str_table = self.getnondatarow('┌┬┐')  # Head
+        seprow = self.getnondatarow('├┼┤')  # Separator row
         for x in range(len(self.tabledata)):  # Main content
-            str_table += self.getdro(x)
+            str_table += self.getdatarow(x)
             if x < len(self.tabledata) - 1:
                 str_table += seprow
-        str_table += self.getndr('└┴┘')  # Footer
+        str_table += self.getnondatarow('└┴┘')  # Footer
         return str_table
 
 
 def auto(data: 'list[list]') -> int:
     """Finds the longest entry and returns its length."""
     lengths = []
-    for i in data:
-        for j in i:
-            lengths.append(len(str(j)))
+    for r in data:
+        for e in r:
+            lengths.append(len(str(e)))
     return max(lengths)
