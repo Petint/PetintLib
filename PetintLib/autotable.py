@@ -98,6 +98,9 @@ class TableInternal:
                 r += f'{di}' + fs * " "
             elif self.align[0] == 'e':  # Align to east
                 r += fs * " " + f'{di}'
+            elif self.align[0] == 'c':  # Aling to center
+                half = self.item_length // 2
+                r += (fs - half) * " " + f'{di}' + (fs - half + 1) * " "
             else:
                 raise ValueError(("Invalid horizontal alignment", self.align[0], "Must be 'E', 'W' or 'C'"))
         r += '│\n'
