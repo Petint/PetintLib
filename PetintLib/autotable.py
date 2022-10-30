@@ -53,35 +53,26 @@ class TableInternal:
         self.cell_height = height
         self.align = align.lower()
 
-    def getfirstrow(self) -> str:
-        r = '┌'
-        r += self.item_length * "─"
-        for __i in range(len(self.tabledata[0]) - 1):
-            r += '┬'
-            r += self.item_length * "─"
-        r += '┐\n'
-        return r
-
-    def getrow(self, index: int) -> str:
+    def getdro(self, index: int) -> str:
         r = ''
         er = len(self.tabledata[0]) * ("│" + self.item_length * " ") + "│\n"
-        for __i in range(len(self.tabledata[index])):
-            loclen = len(str(self.tabledata[index][__i]))
+        for ii in range(len(self.tabledata[index])):
+            loclen = len(str(self.tabledata[index][ii]))
             diff = self.item_length - loclen
             r += '│'
             if self.align[0] == 'w':  # Align west
-                r += f'{self.tabledata[index][__i]}' + diff * " "
+                r += f'{self.tabledata[index][ii]}' + diff * " "
             elif self.align[0] == 'e':  # Align east
-                r += diff * " " + f'{self.tabledata[index][__i]}'
+                r += diff * " " + f'{self.tabledata[index][ii]}'
             elif self.align[0] == 'c':  # Align center
-                half = self.cell_height // 2
-                r = (self.cell_height - half - 1) * er + r + half * er
-                """half = diff / 2
+                """half = self.cell_height // 2
+                r = (self.cell_height - half - 1) * er + r + half * er"""
+                half = diff / 2
                 mg = int(half) * " "  # margin
                 if int(half) == half:
-                    r += mg + f'{self.tabledata[index][__i]}' + mg
+                    r += mg + f'{self.tabledata[index][ii]}' + mg
                 else:
-                    r += mg + "  " f'{self.tabledata[index][__i]}' + " " + mg"""
+                    r += mg + "  " f'{self.tabledata[index][ii]}' + " " + mg
             else:
                 raise ValueError(("Invalid horizontal alignment", self.align[0], "Must be 'E', 'W' or 'C'"))
         r += '│\n'
@@ -96,33 +87,23 @@ class TableInternal:
             raise ValueError(("Invalid vertical alignment", self.align[1], "Must be 'T', 'B' or 'C'"))
         return fr
 
-    def getlastrow(self) -> str:
-        r = '└'
+    def getndr(self, sep) -> str:
+        r = sep[0]  # head: '┌┬┐' | foot: '└┴┘' | sep: '├┼┤'
         r += self.item_length * "─"
         for __i in range(len(self.tabledata[0]) - 1):
-            r += '┴'
+            r += sep[1]
             r += self.item_length * "─"
-        r += '┘\n'
-        return r
-
-    def getseprow(self) -> str:
-        r = '├'
-        r += self.item_length * "─"
-        for __i in range(len(self.tabledata[0]) - 1):
-            r += '┼'
-            r += self.item_length * "─"
-        r += '┤\n'
+        r += sep[2] + '\n'
         return r
 
     def make(self) -> str:
-        str_table = ''
-        str_table += self.getfirstrow()  # Head
-        sepr = self.getseprow()  # Separator row
+        str_table = self.getndr('┌┬┐')  # Head
+        seprow = self.getndr('├┼┤')  # Separator row
         for x in range(len(self.tabledata)):  # Main content
-            str_table += self.getrow(x)
+            str_table += self.getdro(x)
             if x < len(self.tabledata) - 1:
-                str_table += sepr
-        str_table += self.getlastrow()  # Footer
+                str_table += seprow
+        str_table += self.getndr('└┴┘')  # Footer
         return str_table
 
 
