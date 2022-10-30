@@ -40,8 +40,8 @@ align: str - Horizontal: 'w' for west, 'e' - for east, 'c' - for center (center 
         """
         return self._t1.make()
 
-    def make_new(self) -> str:
-        return self._t1.make_new()
+    def make_old(self) -> str:
+        return self._t1.make_old()
 
 
 class TableInternal:
@@ -142,7 +142,7 @@ class TableInternal:
         str_table = self.getnondatarow('┌┬┐')  # Head
         seprow = self.getnondatarow('├┼┤')  # Separator row
         for row in self.tabledata:  # Main content
-            str_table += self.getdatarow_new(row)
+            str_table += self.getdatarow(row)
             if row != self.tabledata[-1]:
                 str_table += seprow
         str_table += self.getnondatarow('└┴┘')  # Footer
