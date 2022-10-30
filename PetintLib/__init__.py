@@ -7,7 +7,7 @@ from .autotable import Table
 from . import petint
 
 __project__      = 'PetintLib'
-__version__ = '1.4.2'
+__version__ = '1.4.3'
 __keywords__     = ['Petint', 'Petras', 'Lib', 'Balint']
 __author__       = 'Petras Balint'
 __author_email__ = 'petras.balint04@gmail.com'
