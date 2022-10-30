@@ -54,63 +54,63 @@ class TableInternal:
         self.align = align.lower()
 
     def getfirstrow(self) -> str:
-        firstrow = '┌'
-        firstrow += self.item_length * "─"
+        r = '┌'
+        r += self.item_length * "─"
         for __i in range(len(self.tabledata[0]) - 1):
-            firstrow += '┬'
-            firstrow += self.item_length * "─"
-        firstrow += '┐\n'
-        return firstrow
+            r += '┬'
+            r += self.item_length * "─"
+        r += '┐\n'
+        return r
 
     def getrow(self, index: int) -> str:
-        row = ''
-        erow = len(self.tabledata[0]) * ("│" + self.item_length * " ") + "│\n"
+        r = ''
+        er = len(self.tabledata[0]) * ("│" + self.item_length * " ") + "│\n"
         for __i in range(len(self.tabledata[index])):
             loclen = len(str(self.tabledata[index][__i]))
             diff = self.item_length - loclen
-            row += '│'
+            r += '│'
             if self.align[0] == 'w':  # Align west
-                row += f'{self.tabledata[index][__i]}' + diff * " "
+                r += f'{self.tabledata[index][__i]}' + diff * " "
             elif self.align[0] == 'e':  # Align east
-                row += diff * " " + f'{self.tabledata[index][__i]}'
+                r += diff * " " + f'{self.tabledata[index][__i]}'
             elif self.align[0] == 'c':  # Align center /// Credit goes to KillerCat#7249
                 half = diff / 2
                 mg = int(half) * " "  # margin
                 if int(half) == half:
-                    row += mg + f'{self.tabledata[index][__i]}' + mg
+                    r += mg + f'{self.tabledata[index][__i]}' + mg
                 else:
-                    row += mg + "  " f'{self.tabledata[index][__i]}' + " " + mg
+                    r += mg + "  " f'{self.tabledata[index][__i]}' + " " + mg
             else:
                 raise ValueError(("Invalid horizontal alignment", self.align[0], "Must be 'E', 'W' or 'C'"))
-        row += '│\n'
+        r += '│\n'
         if self.align[1] == 't':  # Horizontal align Top
-            frow = row + (self.cell_height - 1) * erow
+            fr = r + (self.cell_height - 1) * er
         elif self.align[1] == 'b':  # Horizontal align Bottom
-            frow = (self.cell_height - 1) * erow + row
+            fr = (self.cell_height - 1) * er + r
         elif self.align[1] == 'c':  # Horizontal align Center
             half = self.cell_height // 2
-            frow = (self.cell_height - half - 1) * erow + row + half * erow
+            fr = (self.cell_height - half - 1) * er + r + half * er
         else:
             raise ValueError(("Invalid vertical alignment", self.align[1], "Must be 'T', 'B' or 'C'"))
-        return frow
+        return fr
 
     def getlastrow(self) -> str:
-        lastrow = '└'
-        lastrow += self.item_length * "─"
+        r = '└'
+        r += self.item_length * "─"
         for __i in range(len(self.tabledata[0]) - 1):
-            lastrow += '┴'
-            lastrow += self.item_length * "─"
-        lastrow += '┘\n'
-        return lastrow
+            r += '┴'
+            r += self.item_length * "─"
+        r += '┘\n'
+        return r
 
     def getseprow(self) -> str:
-        seprow = '├'
-        seprow += self.item_length * "─"
+        r = '├'
+        r += self.item_length * "─"
         for __i in range(len(self.tabledata[0]) - 1):
-            seprow += '┼'
-            seprow += self.item_length * "─"
-        seprow += '┤\n'
-        return seprow
+            r += '┼'
+            r += self.item_length * "─"
+        r += '┤\n'
+        return r
 
     def make(self) -> str:
         str_table = ''
