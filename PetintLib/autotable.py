@@ -73,13 +73,15 @@ class TableInternal:
                 r += f'{self.tabledata[index][__i]}' + diff * " "
             elif self.align[0] == 'e':  # Align east
                 r += diff * " " + f'{self.tabledata[index][__i]}'
-            elif self.align[0] == 'c':  # Align center /// Credit goes to KillerCat#7249
-                half = diff / 2
+            elif self.align[0] == 'c':  # Align center
+                half = self.cell_height // 2
+                r = (self.cell_height - half - 1) * er + r + half * er
+                """half = diff / 2
                 mg = int(half) * " "  # margin
                 if int(half) == half:
                     r += mg + f'{self.tabledata[index][__i]}' + mg
                 else:
-                    r += mg + "  " f'{self.tabledata[index][__i]}' + " " + mg
+                    r += mg + "  " f'{self.tabledata[index][__i]}' + " " + mg"""
             else:
                 raise ValueError(("Invalid horizontal alignment", self.align[0], "Must be 'E', 'W' or 'C'"))
         r += '│\n'
