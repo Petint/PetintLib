@@ -56,7 +56,7 @@ class TableInternal:
         self.cell_height = he
         self.align = al.lower()
 
-    def getdatarow(self, index: int) -> str:
+    def getdatarow_old(self, index: int) -> str:
         r = ''
         er = len(self.tabledata[0]) * ("│" + self.item_length * " ") + "│\n"
         for ii in range(len(self.tabledata[index])):
@@ -88,7 +88,7 @@ class TableInternal:
             raise ValueError(("Invalid vertical alignment", self.align[1], "Must be 'T', 'B' or 'C'"))
         return fr
 
-    def getdatarow_new(self, rd: list) -> str:
+    def getdatarow(self, rd: list) -> str:
         # rd: RowData | r: Row | di: DataItem | fs: FrameSpace | er: EmptyRpw
         r = ''
         for di in rd:
@@ -100,7 +100,10 @@ class TableInternal:
                 r += fs * " " + f'{di}'
             elif self.align[0] == 'c':  # Aling to center
                 half = self.item_length // 2
-                r += (fs - half) * " " + f'{di}' + (fs - half + 1) * " "
+                if fs % 2 == 0:
+                    r += (fs - half) * " " + f'{di}' + (fs - half) * " "
+                else:
+                    r += (fs - half) * " " + f'{di}' + (fs - half+1) * " "
             else:
                 raise ValueError(("Invalid horizontal alignment", self.align[0], "Must be 'E', 'W' or 'C'"))
         r += '│\n'
@@ -125,17 +128,17 @@ class TableInternal:
         ndr += sep[2] + '\n'
         return ndr
 
-    def make(self) -> str:
+    def make_old(self) -> str:
         str_table = self.getnondatarow('┌┬┐')  # Head
         seprow = self.getnondatarow('├┼┤')  # Separator row
         for x in range(len(self.tabledata)):  # Main content
-            str_table += self.getdatarow(x)
+            str_table += self.getdatarow_old(x)
             if x < len(self.tabledata) - 1:
                 str_table += seprow
         str_table += self.getnondatarow('└┴┘')  # Footer
         return str_table
 
-    def make_new(self) -> str:
+    def make(self) -> str:
         str_table = self.getnondatarow('┌┬┐')  # Head
         seprow = self.getnondatarow('├┼┤')  # Separator row
         for row in self.tabledata:  # Main content
