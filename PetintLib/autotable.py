@@ -1,4 +1,4 @@
-__version__ = '2.0.2'
+__version__ = '2.1.0'
 
 
 class Table:
@@ -40,9 +40,6 @@ align: str - Horizontal: 'w' for west, 'e' - for east, 'c' - for center (center 
         """
         return self._t1.make()
 
-    def make_old(self) -> str:
-        return self._t1.make_old()
-
 
 class TableInternal:
     """
@@ -55,38 +52,6 @@ class TableInternal:
         self.item_length = ln
         self.cell_height = he
         self.align = al.lower()
-
-    def getdatarow_old(self, index: int) -> str:
-        r = ''
-        er = len(self.tabledata[0]) * ("│" + self.item_length * " ") + "│\n"
-        for ii in range(len(self.tabledata[index])):
-            loclen = len(str(self.tabledata[index][ii]))
-            diff = self.item_length - loclen
-            r += '│'
-            if self.align[0] == 'w':  # Align west
-                r += f'{self.tabledata[index][ii]}' + diff * " "
-            elif self.align[0] == 'e':  # Align east
-                r += diff * " " + f'{self.tabledata[index][ii]}'
-            elif self.align[0] == 'c':  # Align center
-                half = diff / 2
-                mg = int(half) * " "  # margin
-                if int(half) == half:
-                    r += mg + f'{self.tabledata[index][ii]}' + mg
-                else:
-                    r += mg + "  " f'{self.tabledata[index][ii]}' + " " + mg
-            else:
-                raise ValueError(("Invalid horizontal alignment", self.align[0], "Must be 'E', 'W' or 'C'"))
-        r += '│\n'
-        if self.align[1] == 't':  # Horizontal align Top
-            fr = r + (self.cell_height - 1) * er
-        elif self.align[1] == 'b':  # Horizontal align Bottom
-            fr = (self.cell_height - 1) * er + r
-        elif self.align[1] == 'c':  # Horizontal align Center
-            half = self.cell_height // 2
-            fr = (self.cell_height - half - 1) * er + r + half * er
-        else:
-            raise ValueError(("Invalid vertical alignment", self.align[1], "Must be 'T', 'B' or 'C'"))
-        return fr
 
     def getdatarow(self, rd: list) -> str:
         # rd: RowData | r: Row | di: DataItem | fs: FrameSpace | er: EmptyRpw
@@ -127,16 +92,6 @@ class TableInternal:
             ndr += self.item_length * "─"
         ndr += sep[2] + '\n'
         return ndr
-
-    def make_old(self) -> str:
-        str_table = self.getnondatarow('┌┬┐')  # Head
-        seprow = self.getnondatarow('├┼┤')  # Separator row
-        for x in range(len(self.tabledata)):  # Main content
-            str_table += self.getdatarow_old(x)
-            if x < len(self.tabledata) - 1:
-                str_table += seprow
-        str_table += self.getnondatarow('└┴┘')  # Footer
-        return str_table
 
     def make(self) -> str:
         str_table = self.getnondatarow('┌┬┐')  # Head
