@@ -47,11 +47,11 @@ class TableInternal:
     Use facade pls
     """
 
-    def __init__(self, table_data: 'list[list]', length: int, height: int, align: str):
-        self.tabledata = table_data
-        self.item_length = length
-        self.cell_height = height
-        self.align = align.lower()
+    def __init__(self, td, ln, he, al):
+        self.tabledata = td
+        self.item_length = ln
+        self.cell_height = he
+        self.align = al.lower()
 
     def getdatarow(self, index: int) -> str:
         r = ''
@@ -65,8 +65,6 @@ class TableInternal:
             elif self.align[0] == 'e':  # Align east
                 r += diff * " " + f'{self.tabledata[index][ii]}'
             elif self.align[0] == 'c':  # Align center
-                """half = self.cell_height // 2
-                r = (self.cell_height - half - 1) * er + r + half * er"""
                 half = diff / 2
                 mg = int(half) * " "  # margin
                 if int(half) == half:
@@ -87,17 +85,27 @@ class TableInternal:
             raise ValueError(("Invalid vertical alignment", self.align[1], "Must be 'T', 'B' or 'C'"))
         return fr
 
-    def getdatarow_new(self, rd):
-        pass
+    def getdatarow_new(self, rd: list) -> str:  # rd: RowData | r: Row | di: DataItem | fs: FrameSpace
+        r = ''
+        for di in rd:
+            fs = abs(self.item_length - len(di))
+            r += '│'
+            if self.align[0] == 'w':  # Align to west
+                r += f'{di}' + fs * " "
+            if self.align[0] == 'e':  # Align to east
+                r += fs * " " + f'{di}'
+            else:
+                raise ValueError(("Invalid horizontal alignment", self.align[0], "Must be 'E', 'W' or 'C'"))
+        return r
 
     def getnondatarow(self, sep) -> str:
-        r = sep[0]  # head: '┌┬┐' | foot: '└┴┘' | sep: '├┼┤'
-        r += self.item_length * "─"
+        ndr = sep[0]  # head: '┌┬┐' | foot: '└┴┘' | sep: '├┼┤'
+        ndr += self.item_length * "─"
         for __i in range(len(self.tabledata[0]) - 1):
-            r += sep[1]
-            r += self.item_length * "─"
-        r += sep[2] + '\n'
-        return r
+            ndr += sep[1]
+            ndr += self.item_length * "─"
+        ndr += sep[2] + '\n'
+        return ndr
 
     def make(self) -> str:
         str_table = self.getnondatarow('┌┬┐')  # Head
@@ -106,6 +114,15 @@ class TableInternal:
             str_table += self.getdatarow(x)
             if x < len(self.tabledata) - 1:
                 str_table += seprow
+        str_table += self.getnondatarow('└┴┘')  # Footer
+        return str_table
+
+    def make_new(self) -> str:
+        str_table = self.getnondatarow('┌┬┐')  # Head
+        seprow = self.getnondatarow('├┼┤')  # Separator row
+        for row in self.tabledata:  # Main content
+            str_table += self.getdatarow(row)
+            str_table += seprow
         str_table += self.getnondatarow('└┴┘')  # Footer
         return str_table
 
