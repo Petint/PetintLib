@@ -40,6 +40,9 @@ align: str - Horizontal: 'w' for west, 'e' - for east, 'c' - for center (center 
         """
         return self._t1.make()
 
+    def make_new(self) -> str:
+        return self._t1.make_new()
+
 
 class TableInternal:
     """
@@ -85,17 +88,29 @@ class TableInternal:
             raise ValueError(("Invalid vertical alignment", self.align[1], "Must be 'T', 'B' or 'C'"))
         return fr
 
-    def getdatarow_new(self, rd: list) -> str:  # rd: RowData | r: Row | di: DataItem | fs: FrameSpace
+    def getdatarow_new(self, rd: list) -> str:
+        # rd: RowData | r: Row | di: DataItem | fs: FrameSpace | er: EmptyRpw
         r = ''
         for di in rd:
-            fs = abs(self.item_length - len(di))
+            fs = abs(self.item_length - len(str(di)))
             r += '│'
             if self.align[0] == 'w':  # Align to west
                 r += f'{di}' + fs * " "
-            if self.align[0] == 'e':  # Align to east
+            elif self.align[0] == 'e':  # Align to east
                 r += fs * " " + f'{di}'
             else:
                 raise ValueError(("Invalid horizontal alignment", self.align[0], "Must be 'E', 'W' or 'C'"))
+        r += '│\n'
+        er = len(self.tabledata[0]) * ("│" + self.item_length * " ") + "│\n"
+        if self.align[1] == 't':  # Horizontal align Top
+            r = r + (self.cell_height - 1) * er
+        elif self.align[1] == 'b':  # Horizontal align Bottom
+            r = (self.cell_height - 1) * er + r
+        elif self.align[1] == 'c':  # Horizontal align Center
+            half = self.cell_height // 2
+            r = (self.cell_height - half - 1) * er + r + half * er
+        else:
+            raise ValueError(("Invalid vertical alignment", self.align[1], "Must be 'T', 'B' or 'C'"))
         return r
 
     def getnondatarow(self, sep) -> str:
@@ -121,8 +136,9 @@ class TableInternal:
         str_table = self.getnondatarow('┌┬┐')  # Head
         seprow = self.getnondatarow('├┼┤')  # Separator row
         for row in self.tabledata:  # Main content
-            str_table += self.getdatarow(row)
-            str_table += seprow
+            str_table += self.getdatarow_new(row)
+            if row != self.tabledata[-1]:
+                str_table += seprow
         str_table += self.getnondatarow('└┴┘')  # Footer
         return str_table
 
