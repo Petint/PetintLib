@@ -5,6 +5,7 @@ A saját python Csomagom hasznos modulokkal, metódusokkal, osztályokkal és ko
 from . import gagyimatek
 from .autotable import Table
 from . import petint
+from . import washingmachine
 
 __project__      = 'PetintLib'
 __version__ = '1.4.3'
