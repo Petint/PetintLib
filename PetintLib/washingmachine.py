@@ -16,4 +16,6 @@ def clean(file_in: str):
             d[i] = j
     y = json.dumps(d)
     print(y)
+    with open(file_in.strip('.csv')+'.json', 'wt', encoding='utf-8') as js:
+        js.write(y)
 
