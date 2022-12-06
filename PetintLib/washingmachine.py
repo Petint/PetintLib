@@ -19,3 +19,8 @@ def clean(file_in: str):
             pass
     param = {k: v for (k, v) in zip(keys, vaules)}
     return param, waveform_data
+
+
+def cal(param, waveform):
+    time = [i*param['Vertical Scale'] for i in range(param['Memory Length'])]
+    return time
