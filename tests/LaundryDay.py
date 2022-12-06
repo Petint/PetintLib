@@ -7,7 +7,7 @@ def main():
     print(param, data, sep="\n")
     print(len(data))
     time, wave = wm.cal(param, data)
-    print(time)
+    print('', time, wave, sep="\n")
 
 
 if __name__ == '__main__':

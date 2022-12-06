@@ -22,7 +22,7 @@ def clean(file_in: str):
 
 
 def cal(param: dict, waveform: 'list[float]'):
-    """Extracts vaules from the data"""
+    """Extracts values from the data"""
     time = [i*param['Horizontal Scale'] for i in range(int(param['Memory Length']))]
     wf = [i*param['Vertical Scale'] for i in waveform]
     return time, wf
