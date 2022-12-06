@@ -21,6 +21,7 @@ def clean(file_in: str):
     return param, waveform_data
 
 
-def cal(param, waveform):
-    time = [i*param['Vertical Scale'] for i in range(param['Memory Length'])]
-    return time
+def cal(param: dict, waveform: 'list[float]'):
+    """Extracts vaules from the data"""
+    time = [i*param['Vertical Scale'] for i in range(int(param['Memory Length']))]
+    return time, waveform
