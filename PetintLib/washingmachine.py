@@ -1,28 +1,32 @@
 """For cleaning Osciloscope data"""
 __version__ = '1.0'
 
-import json
+
+class Waveform:
+
+    def __init__(self, file_in: str):
+        """Turn saved waveforms into usable data"""
+        with open(file_in, 'rt', encoding='utf-8') as du:
+            data = [n.split(',') for n in du.read().splitlines()]
+        keys, vaules = [f[0] for f in data[:13]], [f[1] for f in data[:12]]
+        self.waveform_data = [float(f[0]) for f in data[13:]]
+        for (i, v) in enumerate(vaules):
+            try:
+                vaules[i] = float(v)
+            except (ValueError, TypeError):
+                pass
+        self.param = {k: v for (k, v) in zip(keys, vaules)}
+
+    def __str__(self):
+        from autotable import Table
+        out = ''
+        tab = Table(self.param)
+        out += tab.make()
+        out += self.waveform_data
 
 
-def clean(file_in: str):
-    """Turn saved waveforms into usable data"""
-    with open(file_in, 'rt', encoding='utf-8') as du:
-        data = du.read().splitlines()
-    data = [n.split(',') for n in data]
-    keys = [f[0] for f in data[:13]]
-    vaules = [f[1] for f in data[:12]]
-    waveform_data = [float(f[0]) for f in data[13:]]
-    for (i, v) in enumerate(vaules):
-        try:
-            vaules[i] = float(v)
-        except (ValueError, TypeError):
-            pass
-    param = {k: v for (k, v) in zip(keys, vaules)}
-    return param, waveform_data
-
-
-def cal(param: dict, waveform: 'list[float]'):
+def cal(waveform: Waveform):
     """Extracts values from the data"""
-    time = [i*param['Horizontal Scale'] for i in range(int(param['Memory Length']))]
-    wf = [i*param['Vertical Scale'] for i in waveform]
+    time = [i * waveform.param['Horizontal Scale'] for i in range(int(waveform.param['Memory Length']))]
+    wf = [i * waveform.param['Vertical Scale'] for i in waveform.waveform_data]
     return time, wf

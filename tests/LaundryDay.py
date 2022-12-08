@@ -3,10 +3,10 @@ import json
 
 
 def main():
-    param, data = wm.clean('test.csv')
-    print(param, data, sep="\n")
-    print(len(data))
-    time, wave = wm.cal(param, data)
+    wf = wm.Waveform('test.csv')
+    print(wf)
+    print(len(wf.waveform_data))
+    time, wave = wm.cal(wf)
     print('', time, wave, sep="\n")
 
 
