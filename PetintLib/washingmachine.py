@@ -20,8 +20,7 @@ class Waveform:
     def __str__(self):
         from autotable import Table
         tab = Table(self.param)
-
-        return tab.make() + str(self.waveform_data)
+        return tab.make()
 
 
 def cal(waveform: Waveform):
