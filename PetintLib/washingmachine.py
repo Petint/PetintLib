@@ -19,10 +19,9 @@ class Waveform:
 
     def __str__(self):
         from autotable import Table
-        out = ''
         tab = Table(self.param)
-        out += tab.make()
-        out += self.waveform_data
+
+        return tab.make() + str(self.waveform_data)
 
 
 def cal(waveform: Waveform):

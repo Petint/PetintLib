@@ -4,6 +4,7 @@ import json
 
 def main():
     wf = wm.Waveform('test.csv')
+    print(wf.param)
     print(wf)
     print(len(wf.waveform_data))
     time, wave = wm.cal(wf)

@@ -1,4 +1,5 @@
-__version__ = '2.1.0'
+__version__ = '2.1.1'
+from collections.abc import Iterable
 
 
 class Table:
@@ -15,7 +16,7 @@ align: str - Horizontal: 'w' for west, 'e' - for east, 'c' - for center (center 
     """
 
     # valid kwargs: width: int = 0, height: int = 1, align: str = 'WB'
-    def __init__(self, table_data: 'list[list]', **kwargs):
+    def __init__(self, table_data: Iterable, **kwargs):
         """
 table_data: 'list[list[any]]' - Data for the table
 
@@ -27,6 +28,8 @@ align: str - Horizontal: 'w' for west, 'e' - for east, 'c' - for center (center 
                  Vertical: 'T' for fop, 'B' for bottom, 'C' for center, ('WT' by default)
 
         """
+        if type(table_data) is dict:
+            table_data = list(table_data.items())
         w, h, a = kwargs.get('width', auto(table_data)), kwargs.get('height', 1), kwargs.get('align', 'wt')
         self._t1 = TableInternal(table_data, w, h, a)
 
