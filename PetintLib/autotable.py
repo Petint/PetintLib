@@ -30,8 +30,8 @@ align: str - Horizontal: 'w' for west, 'e' - for east, 'c' - for center (center 
         """
         if type(table_data) is dict:
             table_data = list(table_data.items())
-        w, h, a = kwargs.get('width', auto(table_data)), kwargs.get('height', 1), kwargs.get('align', 'wt')
-        self._t1 = TableInternal(table_data, w, h, a)
+        width, height, align = kwargs.get('width', auto(table_data)), kwargs.get('height', 1), kwargs.get('align', 'wt')
+        self._table = TableInternal(table_data, width, height, align)
 
     def make(self) -> str:
         """
@@ -41,7 +41,7 @@ align: str - Horizontal: 'w' for west, 'e' - for east, 'c' - for center (center 
             1. Turn list into table: table1 = Table(data)
             2. print the table :     print(table1.make())
         """
-        return self._t1.make()
+        return self._table.make()
 
 
 class TableInternal:
@@ -50,67 +50,67 @@ class TableInternal:
     Use facade pls
     """
 
-    def __init__(self, td, ln, he, al):
-        self.tabledata = td
-        self.item_length = ln
-        self.cell_height = he
-        self.align = al.lower()
+    def __init__(self, tabledata, item_length, cell_height, align):
+        # Should I maker this a dataclass?
+        self.tabledata = tabledata
+        self.item_length = item_length
+        self.cell_height = cell_height
+        self.align = align.lower()
 
-    def getdatarow(self, rd: list) -> str:
-        # rd: RowData | r: Row | di: DataItem | fs: FrameSpace | er: EmptyRpw
-        r = ''
-        for di in rd:
-            fs = abs(self.item_length - len(str(di)))
-            r += '│'
+    def get_datarow(self, row_data: list) -> str:
+        row = ''
+        for data_item in row_data:
+            frame_space = abs(self.item_length - len(str(data_item)))
+            row += '│'
             if self.align[0] == 'w':  # Align to west
-                r += f'{di}' + fs * " "
+                row += f'{data_item}' + frame_space * " "
             elif self.align[0] == 'e':  # Align to east
-                r += fs * " " + f'{di}'
+                row += frame_space * " " + f'{data_item}'
             elif self.align[0] == 'c':  # Aling to center
-                half = self.item_length // 2
-                if fs % 2 == 0:
-                    r += (fs - half) * " " + f'{di}' + (fs - half) * " "
+                half_length = self.item_length // 2
+                if frame_space % 2 == 0:
+                    row += (frame_space - half_length) * " " + f'{data_item}' + (frame_space - half_length) * " "
                 else:
-                    r += (fs - half) * " " + f'{di}' + (fs - half+1) * " "
+                    row += (frame_space - half_length) * " " + f'{data_item}' + (frame_space - half_length + 1) * " "
             else:
                 raise ValueError(("Invalid horizontal alignment", self.align[0], "Must be 'E', 'W' or 'C'"))
-        r += '│\n'
-        er = len(self.tabledata[0]) * ("│" + self.item_length * " ") + "│\n"
+        row += '│\n'
+        empty_row = len(self.tabledata[0]) * ("│" + self.item_length * " ") + "│\n"
         if self.align[1] == 't':  # Horizontal align Top
-            r = r + (self.cell_height - 1) * er
+            row = row + (self.cell_height - 1) * empty_row
         elif self.align[1] == 'b':  # Horizontal align Bottom
-            r = (self.cell_height - 1) * er + r
+            row = (self.cell_height - 1) * empty_row + row
         elif self.align[1] == 'c':  # Horizontal align Center
-            half = self.cell_height // 2
-            r = (self.cell_height - half - 1) * er + r + half * er
+            half_length = self.cell_height // 2
+            row = (self.cell_height - half_length - 1) * empty_row + row + half_length * empty_row
         else:
             raise ValueError(("Invalid vertical alignment", self.align[1], "Must be 'T', 'B' or 'C'"))
-        return r
+        return row
 
-    def getnondatarow(self, sep) -> str:
-        ndr = sep[0]  # head: '┌┬┐' | foot: '└┴┘' | sep: '├┼┤'
-        ndr += self.item_length * "─"
+    def get_nondata_row(self, separator) -> str:
+        nondata_row = separator[0]  # head: '┌┬┐' | foot: '└┴┘' | sep: '├┼┤'
+        nondata_row += self.item_length * "─"
         for __i in range(len(self.tabledata[0]) - 1):
-            ndr += sep[1]
-            ndr += self.item_length * "─"
-        ndr += sep[2] + '\n'
-        return ndr
+            nondata_row += separator[1]
+            nondata_row += self.item_length * "─"
+        nondata_row += separator[2] + '\n'
+        return nondata_row
 
     def make(self) -> str:
-        str_table = self.getnondatarow('┌┬┐')  # Head
-        seprow = self.getnondatarow('├┼┤')  # Separator row
+        str_table = self.get_nondata_row('┌┬┐')  # Head
+        separator_row = self.get_nondata_row('├┼┤')  # Separator row
         for row in self.tabledata:  # Main content
-            str_table += self.getdatarow(row)
+            str_table += self.get_datarow(row)
             if row != self.tabledata[-1]:
-                str_table += seprow
-        str_table += self.getnondatarow('└┴┘')  # Footer
+                str_table += separator_row
+        str_table += self.get_nondata_row('└┴┘')  # Footer
         return str_table
 
 
 def auto(data: 'list[list]') -> int:
     """Finds the longest entry and returns its length."""
     lengths = []
-    for r in data:
-        for e in r:
-            lengths.append(len(str(e)))
+    for row in data:
+        for entry in row:
+            lengths.append(len(str(entry)))
     return max(lengths)
