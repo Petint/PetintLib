@@ -25,4 +25,4 @@ __classifiers__ = [
 __entry_points__ = {}
 
 __requires__ = []
-__extra_requires__ = {'mcpi'}
+__extra_requires__ = {'mcpi':'1.2.1'}
