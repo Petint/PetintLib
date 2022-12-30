@@ -8,7 +8,7 @@ from . import petint
 from . import scope
 
 __project__      = 'PetintLib'
-__version__ = '1.4.6'
+__version__ = '1.4.5'
 __keywords__     = ['Petint', 'Petras', 'Lib', 'Balint', 'Oscilloscope']
 __author__       = 'Petras Balint'
 __author_email__ = 'petras.balint04@gmail.com'
