@@ -1,5 +1,4 @@
 __version__ = '2.1.1'
-from collections.abc import Iterable
 
 
 class Table:
@@ -16,7 +15,7 @@ align: str - Horizontal: 'w' for west, 'e' - for east, 'c' - for center (center 
     """
 
     # valid kwargs: width: int = 0, height: int = 1, align: str = 'WB'
-    def __init__(self, table_data: Iterable, **kwargs):
+    def __init__(self, table_data: list | dict, **kwargs):
         """
 table_data: 'list[list[any]]' - Data for the table
 
@@ -24,7 +23,7 @@ width: int - Width of a cell, auto by default
 
 height: int - Height of cell, 1 by default.
 
-align: str - Horizontal: 'w' for west, 'e' - for east, 'c' - for center (center is kinda iffy.)
+align: str - Horizontal: 'w' for west, 'e' - for east, 'c' - for center
                  Vertical: 'T' for fop, 'B' for bottom, 'C' for center, ('WT' by default)
 
         """
