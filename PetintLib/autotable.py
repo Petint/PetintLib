@@ -87,7 +87,7 @@ class TableInternal:
         return row
 
     def get_nondata_row(self, separator) -> str:
-        nondata_row = separator[0]  # head: '┌┬┐' | foot: '└┴┘' | sep: '├┼┤'
+        nondata_row = separator[0]  # head: '┌┬┐' | foot: '└┴┘' | separator: '├┼┤'
         nondata_row += self.item_length * "─"
         for __i in range(len(self.tabledata[0]) - 1):
             nondata_row += separator[1]
@@ -106,7 +106,7 @@ class TableInternal:
         return str_table
 
 
-def auto(data: 'list[list]') -> int:
+def auto(data):
     """Finds the longest entry and returns its length."""
     lengths = []
     for row in data:
