@@ -1,4 +1,4 @@
-__version__ = '2.1.1'
+__version__ = '2.1.2'
 
 
 class Table:
@@ -61,11 +61,11 @@ class TableInternal:
         for data_item in row_data:
             frame_space = abs(self.item_length - len(str(data_item)))
             row += '│'
-            if self.align[0] == 'w':  # Align to west
+            if self.align[0] == 'w':  # Horizontal align west
                 row += f'{data_item}' + frame_space * " "
-            elif self.align[0] == 'e':  # Align to east
+            elif self.align[0] == 'e':  # Horizontal align east
                 row += frame_space * " " + f'{data_item}'
-            elif self.align[0] == 'c':  # Aling to center
+            elif self.align[0] == 'c':  # Horizontal align center
                 half_length = self.item_length // 2
                 if frame_space % 2 == 0:
                     row += (frame_space - half_length) * " " + f'{data_item}' + (frame_space - half_length) * " "
