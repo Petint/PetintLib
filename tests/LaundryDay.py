@@ -1,5 +1,4 @@
 from PetintLib import scope as wm
-import json
 
 
 def main():

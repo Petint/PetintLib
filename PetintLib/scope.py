@@ -6,8 +6,8 @@ class Waveform:
 
     def __init__(self, waveform_file_in: str):
         """Turn saved waveforms into usable data"""
-        with open(waveform_file_in, 'rt', encoding='utf-8') as osciloscope_waveform:
-            data = [n.split(',') for n in osciloscope_waveform.read().splitlines()]
+        with open(waveform_file_in, 'rt', encoding='utf-8') as oscilloscope_waveform:
+            data = [n.split(',') for n in oscilloscope_waveform.read().splitlines()]
         keys, values = [f[0] for f in data[:13]], [f[1] for f in data[:12]]
         waveform_data = (float(f[0]) for f in data[13:])
         values = self._values_to_float(values)
