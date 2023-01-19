@@ -1,4 +1,4 @@
-"""For cleaning Osciloscope data"""
+"""For cleaning Oscilloscope data"""
 __version__ = '1.1'
 
 
@@ -11,7 +11,7 @@ class Waveform:
         keys, values = [f[0] for f in data[:13]], [f[1] for f in data[:12]]
         waveform_data = (float(f[0]) for f in data[13:])
         values = self._values_to_float(values)
-        self.param = {key: value for (key, value) in zip(keys, values)}
+        self.param = dict(zip(keys, values))
         self.time = [i * self.param['Horizontal Scale'] for i in range(int(self.param['Memory Length']))]
         self.waveform = [i * self.param['Vertical Scale'] for i in waveform_data]
 
