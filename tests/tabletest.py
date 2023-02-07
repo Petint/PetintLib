@@ -14,7 +14,7 @@ def main():
 
 def profile():
     data = [[0x0, 0x1, 0x2, 3], [0x4, 0x5, 0x6, 0x7], [0x8, 0x9, 0xA, 0xB], [0xC, 0xD, 0xE, 0xF]]
-    table = PetintLib.Table(data, height=1, width='auto', align='cc')
+    table = PetintLib.Table(data, height=1, align='cc')
     with cProfile.Profile() as pr:
         string_table = table.make()
         print(string_table)
