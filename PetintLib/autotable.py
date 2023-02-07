@@ -89,7 +89,7 @@ class TableInternal:
     def get_nondata_row(self, separator) -> str:
         nondata_row = separator[0]  # head: '┌┬┐' | foot: '└┴┘' | separator: '├┼┤'
         nondata_row += self.item_length * "─"
-        for __i in range(len(self.tabledata[0]) - 1):
+        for _ in range(len(self.tabledata[0]) - 1):
             nondata_row += separator[1]
             nondata_row += self.item_length * "─"
         nondata_row += separator[2] + '\n'

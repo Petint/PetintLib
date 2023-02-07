@@ -13,9 +13,9 @@ def main():
 
 
 def profile():
-    data = PetintLib.randbytes.randbytearray(10, 10)
+    data = PetintLib.randbytes.randbytearray(20, 10)
     with cProfile.Profile() as pr:
-        table = PetintLib.Table(data, height=3, width=6, align='EC')
+        table = PetintLib.Table(data, height=1, align='wC')
         string_table = table.make()
         print(string_table)
     stats = pstats.Stats(pr)
