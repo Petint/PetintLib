@@ -15,13 +15,13 @@ def main():
 def profile():
     data = PetintLib.randbytes.randbytearray(10, 10)
     with cProfile.Profile() as pr:
-        table = PetintLib.Table(data, height=1, align='cc')
+        table = PetintLib.Table(data, height=3, width=6, align='EC')
         string_table = table.make()
         print(string_table)
     stats = pstats.Stats(pr)
     stats.sort_stats(pstats.SortKey.TIME)
-    stats.print_stats()
-    # stats.dump_stats(filename='autotable.prof')
+    # stats.print_stats()
+    stats.dump_stats(filename='autotable.prof')
 
 
 if __name__ == '__main__':
