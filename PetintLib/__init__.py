@@ -9,7 +9,7 @@ from . import scope
 from . import randbytes
 
 __project__      = 'PetintLib'
-__version__ = '1.4.5.1'
+__version__ = '1.4.5.2'
 __keywords__     = ['Petint', 'Petras', 'Lib', 'Balint', 'Oscilloscope']
 __author__       = 'Petras Balint'
 __author_email__ = 'petras.balint04@gmail.com'

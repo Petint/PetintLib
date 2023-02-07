@@ -13,7 +13,7 @@ def main():
 
 
 def profile():
-    data = []
+    data = PetintLib.randbytes.randbytearray(10, 10)
     with cProfile.Profile() as pr:
         table = PetintLib.Table(data, height=1, align='cc')
         string_table = table.make()

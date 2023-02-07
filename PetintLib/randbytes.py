@@ -1,4 +1,4 @@
-__version__ = '0.0.1'
+__version__ = '0.0.2'
 from random import randint
 
 def randbyte() -> str:
@@ -13,5 +13,10 @@ def randbytes(bytecount: int) -> list:
 
 def randbytearray(dimx: int, dimy: int):
     """Returns a random byte array of given dimensions"""
-    return[bytearray.append(randbytes(dimx)) for _ in range(dimy)]
+    return [randbytes(dimx) for _ in range(dimy)]
+
+def bytegen():
+    """Generates an endless stream of terrible ideas. No, wait. I mean Bytes"""
+    while True:
+        yield randbyte()
 
