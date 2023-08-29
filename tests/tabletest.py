@@ -1,4 +1,6 @@
 import PetintLib
+import cProfile
+import pstats
 
 
 def main():
@@ -10,5 +12,18 @@ def main():
     print(table1.make())
 
 
+def profile():
+    data = PetintLib.randbytes.randbytearray(20, 10)
+    with cProfile.Profile() as pr:
+        table = PetintLib.Table(data, height=1, align='wC')
+        string_table = table.make()
+        print(string_table)
+    stats = pstats.Stats(pr)
+    stats.sort_stats(pstats.SortKey.TIME)
+    # stats.print_stats()
+    stats.dump_stats(filename='autotable.prof')
+
+
 if __name__ == '__main__':
     main()
+    profile()

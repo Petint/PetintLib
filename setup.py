@@ -11,29 +11,29 @@ def read(fname):
 
 def main():
     """Executes setup when this script is the top-level"""
-    import PetintLib as app
+    import PetintLib as App
 
     setup(
-        name=app.__project__,
-        version=app.__version__,
-        description=app.__doc__,
+        name=App.__project__,
+        version=App.__version__,
+        description=App.__doc__,
         long_description=read('README.md'),
-        classifiers=app.__classifiers__,
-        author=app.__author__,
-        author_email=app.__author_email__,
-        url=app.__url__,
+        classifiers=App.__classifiers__,
+        author=App.__author__,
+        author_email=App.__author_email__,
+        url=App.__url__,
         license=[
             c.rsplit('::', 1)[1].strip()
-            for c in app.__classifiers__
+            for c in App.__classifiers__
             if c.startswith('License ::')
         ][0],
-        keywords=app.__keywords__,
+        keywords=App.__keywords__,
         packages=find_packages(),
         include_package_data=True,
-        platforms=app.__platforms__,
-        entry_points=app.__entry_points__,
-        install_requires=app.__requires__,
-        extras_require=app.__extra_requires__,
+        platforms=App.__platforms__,
+        entry_points=App.__entry_points__,
+        install_requires=App.__requires__,
+        extras_require=App.__extra_requires__,
     )
 
 
