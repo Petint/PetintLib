@@ -56,7 +56,7 @@ class TableInternal:
         self.cell_height = cell_height
         self.align = align.lower()
 
-    def get_datarow(self, row_data: list) -> str:
+    def generate_data_row(self, row_data: list) -> str:
         row = ''
         for data_item in row_data:
             frame_space = abs(self.item_length - len(str(data_item)))
@@ -86,7 +86,7 @@ class TableInternal:
             raise ValueError(("Invalid vertical alignment", self.align[1], "Must be 'T', 'B' or 'C'"))
         return row
 
-    def get_nondata_row(self, separator) -> str:
+    def generate_separator_row(self, separator) -> str:
         nondata_row = separator[0]  # head: '┌┬┐' | foot: '└┴┘' | separator: '├┼┤'
         nondata_row += self.item_length * "─"
         for _ in range(len(self.tabledata[0]) - 1):
@@ -96,13 +96,13 @@ class TableInternal:
         return nondata_row
 
     def make(self) -> str:
-        str_table = self.get_nondata_row('┌┬┐')  # Head
-        separator_row = self.get_nondata_row('├┼┤')  # Separator row
+        str_table = self.generate_separator_row('┌┬┐')  # Head
+        separator_row = self.generate_separator_row('├┼┤')  # Separator row
         for row in self.tabledata:  # Main content
-            str_table += self.get_datarow(row)
+            str_table += self.generate_data_row(row)
             if row != self.tabledata[-1]:
                 str_table += separator_row
-        str_table += self.get_nondata_row('└┴┘')  # Footer
+        str_table += self.generate_separator_row('└┴┘')  # Footer
         return str_table
 
 
