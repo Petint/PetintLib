@@ -13,11 +13,11 @@ def user_int_input(tries: int, message: str) -> int:
     """Hibakezelős számbekérő"""
     if tries != 0:
         try:
-            usen_input = int(input(message))
+            user_input = int(input(message))
         except ValueError:
             print("Nem számot adtál meg.")
-            usen_input = user_int_input(tries - 1, message)
-        return usen_input
+            user_input = user_int_input(tries - 1, message)
+        return user_input
     else:
         raise ValueError("Tul sok hibás próbálkozás.")
 

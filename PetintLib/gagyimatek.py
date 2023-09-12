@@ -23,7 +23,7 @@ def kivon(a, b):
     A két beadott szám külombsége
     (a-b)
     """
-    return a - b
+    return osszead(a, szorzas(-1, b))
 
 
 def szorzas(a, b):
