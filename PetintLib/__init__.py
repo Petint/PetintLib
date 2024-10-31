@@ -27,3 +27,5 @@ __entry_points__ = {}
 
 __requires__ = []
 __extra_requires__ = {'mcpi':'1.2.1'}
+def asd():
+    pass

@@ -43,6 +43,10 @@ align: str - Horizontal: 'w' for west, 'e' - for east, 'c' - for center
         return self._table.make()
 
 
+    def __print__(self):
+        print(self.make())
+
+
 class TableInternal:
     """
     Internal class
