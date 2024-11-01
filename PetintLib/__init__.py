@@ -1,8 +1,7 @@
 """
-A saját python Csomagom hasznos modulokkal, metódusokkal, osztályokkal és konstansokkal
+Python package with mildly usefull methods, classes and constants.
 """
 
-from . import gagyimatek
 from .autotable import Table
 from . import petint
 from . import scope
