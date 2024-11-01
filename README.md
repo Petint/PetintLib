@@ -1,13 +1,5 @@
 # PetintLib
 
-PetintLib now has its own repo
-
-___This is a test commit for my new GPG key. If this works the commit should be verified.___
-
----
-
-![cat-vibe.gif](cat-vibe.gif)
-
-hello
-
----
+PetintLib is a semi-usefull set of random utilities I made for my own entertainment.
+There's a module for processing saved data from an oscilloscope, another one for making ASCII tables, one for generating random bytes.
+So, yeah. It's kind of a mixed bag for sure.
