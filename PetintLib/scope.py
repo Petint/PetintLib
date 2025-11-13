@@ -1,4 +1,4 @@
-"""For cleaning Oscilloscope data"""
+"""For processing Oscilloscope data"""
 __version__ = '1.1'
 
 
